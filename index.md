@@ -3,9 +3,9 @@
 
 This paper introduces a chunk-wise multi-scale style modeling method for cross-speaker style transfer task. Multi-scale style modeling is adopted for explicit local prosody preservation during the transfer, which is absent in existing crossspeaker style models. A novel chunk-wise style module is proposed to improve the precision of speech style modeling. Switchable adversarial classifiers are designed to disentangle speaker timbre and speech style across disjoint datasets. Experiment results confirm that the model fairly transfers both local and global style to new target speaker.
 
-## Dataset
+## Training dataset
 
-Our cross-speaker style transfer experiments are conducted based on 3 disjoint datasets:
+There are **3 disjoint-dataset** involved in our cross-speaker style transfer experiments:
 
 1. **MST-Originbeat:** A style-consistent Mandarin corpus offered by the ICASSP 2021 M2VOC challenge \[1\], with one female and one male speaker (named as `OF`, `OM`).
 2. **Speaker F:** A private hybrid Mandarin dataset from another female Chinese speaker. It consists of two part (named as `F.N`, `F.S1`). The first is an utterance level neutral corpus. The second is an audio book corpus with another style.
@@ -13,8 +13,7 @@ Our cross-speaker style transfer experiments are conducted based on 3 disjoint d
 
 Following the common practice of cross-speaker style transfer model training on disjoint datasets \[2, 3\], a shared style category (`P`) that is established across different datasets, as shown in the table below. 
 Consequently, the cross-speaker style transfer model is assigned
-with 6 subtasks: to transfer target style T1 to speaker OF, OM,
-M; and T2 to speaker OF, OM, F.
+with **6 subtasks: to transfer target style T1 to speaker M, OM, OF; and T2 to speaker F, OF, OM.**
 
 | Dataset | Speaker label | Style label |
 |:--------|:--------------|:------------|
@@ -34,30 +33,94 @@ To demonstrate the functionality of the proposed chunk-wise global style ensembl
 - On the other hand, replaces the switchable adversarial classifiers with one single adversarial classifier on each branch. (`Proposed w/o switchbox`)
 
 The cross-speaker style transfer results of these baseline models and the proposed model are all provided here for comparison.
-An ideal cross-speaker style transfer result is supposed to match the timbre of with the given speaker, while preserving both local prosody and global style of the reference speech.
+An ideal cross-speaker style transfer result is supposed to **match the timbre of with the given speaker, while preserving both local prosody and global style of the reference speech.**
 
 
 ### Task1: Transfer target style `T1` to speaker `M`
 
-**A sample audio from speaker `M`**, to show the feature of the speaker's timbre:
+**A sample audio from speaker M**, to show the feature of the speaker's timbre:
 
-<audio controls><source src="./static/some.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+<audio controls><source src="./static/gt_voice/M.wav" type="audio/wav">Your browser does not support the audio element.</audio>
 
 **Style Transfer results:**
 
-| Reference (with style `T1`)| `Proposed` | `Proposed w/o chunk` | `Proposed w/o switchbox` |
+| Reference (with style T1)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
 |:------------|:------------|:------------|:------------|
-|<audio controls><source src="./static/some.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/some.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/some.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/some.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-M/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
 
 ### Task2: Transfer target style `T1` to speaker `OM`
 
+**A sample audio from speaker OM**, to show the feature of the speaker's timbre:
+
+<audio controls><source src="./static/gt_voice/OM.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+
+**Style Transfer results:**
+
+| Reference (with style T1)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
+|:------------|:------------|:------------|:------------|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OM/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+
+
 ### Task3: Transfer target style `T1` to speaker `OF`
+
+**A sample audio from speaker OF**, to show the feature of the speaker's timbre:
+
+<audio controls><source src="./static/gt_voice/OF.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+
+**Style Transfer results:**
+
+| Reference (with style T1)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
+|:------------|:------------|:------------|:------------|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T1-OF/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+
 
 ### Task4: Transfer target style `T2` to speaker `F`
 
+**A sample audio from speaker F**, to show the feature of the speaker's timbre:
+
+<audio controls><source src="./static/gt_voice/F.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+
+**Style Transfer results:**
+
+| Reference (with style T2)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
+|:------------|:------------|:------------|:------------|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-F/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+
 ### Task5: Transfer target style `T2` to speaker `OF`
 
+**A sample audio from speaker OF**, to show the feature of the speaker's timbre:
+
+<audio controls><source src="./static/gt_voice/OF.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+
+**Style Transfer results:**
+
+| Reference (with style T2)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
+|:------------|:------------|:------------|:------------|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OF/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+
 ### Task6: Transfer target style `T2` to speaker `OM`
+
+**A sample audio from speaker OM**, to show the feature of the speaker's timbre:
+
+<audio controls><source src="./static/gt_voice/OM.wav" type="audio/wav">Your browser does not support the audio element.</audio>
+
+**Style Transfer results:**
+
+| Reference (with style T2)| Proposed | Proposed w/o chunk | Proposed w/o switchbox |
+|:------------|:------------|:------------|:------------|
+|<audio controls><source src="./static/ref_T1/Ref.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/A.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/B.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/C.0.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/A.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/B.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/C.1.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
+|<audio controls><source src="./static/ref_T1/Ref.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/A.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/B.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|<audio controls><source src="./static/T2-OM/C.2.wav" type="audio/wav">Your browser does not support the audio element.</audio>|
 
 
 ## References
